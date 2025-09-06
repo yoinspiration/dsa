@@ -1,0 +1,69 @@
+# Cursor Rules for DSA Learning Project
+
+## 项目概述
+这是一个数据结构与算法学习项目，专注于LeetCode经典题目的多种解法实现和对比分析。
+
+## 代码规范
+
+### 文件命名
+- 使用小写字母和下划线：`two_sum_brute_force.c`
+- 文件名应清晰描述内容：`two_sum_hash_table.c`
+- 文档文件使用描述性名称：`two_sum_complete_analysis.md`
+
+### 代码风格
+- C语言代码遵循标准C99规范
+- 使用有意义的变量名和函数名
+- 添加详细的注释说明算法思路
+- 内存管理：及时释放malloc分配的内存
+
+### 文档规范
+- Markdown文件使用中文编写
+- 包含完整的算法分析、性能对比和代码实现
+- 使用emoji图标增强可读性
+- 提供详细的代码示例和解释
+
+## Git规范
+
+### Commit Message规范
+- 使用中文编写commit message
+- 格式：`类型: 简短描述`
+- 类型包括：
+  - `feat`: 新功能
+  - `fix`: 修复bug
+  - `docs`: 文档更新
+  - `style`: 代码格式调整
+  - `refactor`: 代码重构
+  - `test`: 测试相关
+  - `chore`: 构建过程或辅助工具的变动
+
+### 示例
+```
+feat: 添加Two Sum哈希表解法实现
+docs: 更新算法性能对比分析
+fix: 修复内存泄漏问题
+refactor: 优化哈希函数实现
+```
+
+## 项目结构
+```
+dsa/
+├── two_sum/                    # Two Sum问题
+│   ├── two_sum_brute_force.c   # 暴力解法
+│   ├── two_sum_sort_two_pointers.c  # 排序+双指针解法
+│   ├── two_sum_hash_table.c    # 哈希表解法
+│   └── two_sum_complete_analysis.md  # 完整分析文档
+└── README.md                   # 项目说明
+```
+
+## 开发流程
+1. 实现基础解法（暴力法）
+2. 优化算法（排序法、哈希表法）
+3. 性能测试和对比分析
+4. 编写详细文档
+5. 代码审查和优化
+
+## 注意事项
+- 所有算法实现都要包含完整的错误处理
+- 提供多种解法以便学习和对比
+- 文档要包含时间复杂度、空间复杂度分析
+- 代码要有详细的注释说明
