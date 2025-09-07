@@ -1,7 +1,3 @@
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-
 // 定义值和索引的结构体
 typedef struct {
     int value;
@@ -15,6 +11,9 @@ int compare(const void* a, const void* b) {
     return va->value - vb->value;
 }
 
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     // 分配返回数组的内存
     int* result = (int*)malloc(2 * sizeof(int));

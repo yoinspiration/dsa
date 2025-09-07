@@ -31,10 +31,10 @@ Two Sum 是 LeetCode 最经典的算法题之一，要求找到数组中两个�
 | **实现难度** | ⭐ 容易 | ⭐⭐⭐ 较难 | ⭐⭐ 中等 |
 | **内存使用** | 最少 | 较多 | 中等 |
 
-### 方案一：暴力解法 (two_sum1.c)
+### 方案一：暴力解法 (two_sum_brute_force.c)
 
 #### ✅ 优势
-- **代码简洁**：仅18行，逻辑清晰易懂
+- **代码简洁**：仅19行，逻辑清晰易懂
 - **内存高效**：空间复杂度O(1)，只分配结果数组
 - **实现简单**：无需复杂数据结构，调试容易
 - **无依赖**：不依赖额外库函数
@@ -49,7 +49,7 @@ Two Sum 是 LeetCode 最经典的算法题之一，要求找到数组中两个�
 - 快速原型开发
 - 面试中展示基础能力
 
-### 方案二：排序+双指针 (two_sum2.c)
+### 方案二：排序+双指针 (two_sum_sort_two_pointers.c)
 
 #### ✅ 优势
 - **效率提升**：时间复杂度O(n log n)
@@ -68,7 +68,7 @@ Two Sum 是 LeetCode 最经典的算法题之一，要求找到数组中两个�
 - 学习算法设计
 - 面试中展示优化能力
 
-### 方案三：哈希表法 ⭐ (two_sum_hash.c)
+### 方案三：哈希表法 ⭐ (two_sum_hash_table.c)
 
 #### ✅ 优势
 - **最优时间复杂度**：O(n)，一次遍历即可
@@ -121,6 +121,9 @@ Two Sum 是 LeetCode 最经典的算法题之一，要求找到数组中两个�
 
 ### 暴力解法核心代码
 ```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     int *result = malloc(2 * sizeof(int));
     *returnSize = 2;
@@ -134,45 +137,50 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
             }
         }
     }
+
     return result;
 }
 ```
 
 ### 排序+双指针核心代码
 ```c
-// 结构体定义
+// 定义值和索引的结构体
 typedef struct {
     int value;
     int originalIndex;
 } ValueIndex;
 
-// 比较函数
+// 比较函数，用于 qsort
 int compare(const void* a, const void* b) {
     ValueIndex* va = (ValueIndex*)a;
     ValueIndex* vb = (ValueIndex*)b;
     return va->value - vb->value;
 }
 
-// 主函数
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
-    int* result = malloc(2 * sizeof(int));
+    // 分配返回数组的内存
+    int* result = (int*)malloc(2 * sizeof(int));
     *returnSize = 2;
     
-    // 创建配对数组
-    ValueIndex* pairs = malloc(numsSize * sizeof(ValueIndex));
+    // 创建值和索引的配对数组
+    ValueIndex* pairs = (ValueIndex*)malloc(numsSize * sizeof(ValueIndex));
     for (int i = 0; i < numsSize; i++) {
         pairs[i].value = nums[i];
         pairs[i].originalIndex = i;
     }
     
-    // 排序
+    // 按值排序
     qsort(pairs, numsSize, sizeof(ValueIndex), compare);
     
-    // 双指针查找
+    // 使用双指针查找
     int left = 0, right = numsSize - 1;
     while (left < right) {
         int sum = pairs[left].value + pairs[right].value;
         if (sum == target) {
+            // 找到答案，返回原始索引
             result[0] = pairs[left].originalIndex;
             result[1] = pairs[right].originalIndex;
             free(pairs);
@@ -184,7 +192,10 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
         }
     }
     
+    // 清理内存
     free(pairs);
+    
+    // 理论上不会到达这里
     return result;
 }
 ```
@@ -198,12 +209,18 @@ typedef struct {
     int used;     // 标记该位置是否被使用
 } HashEntry;
 
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     // 分配返回数组的内存
     int* result = (int*)malloc(2 * sizeof(int));
     *returnSize = 2;
     
     // 使用简单的哈希表实现
+    // 由于数组长度最大为10^4，我们可以使用一个较小的哈希表
+    // 使用开放地址法处理冲突
+    // 10007 是大于 10000 的最小质数
     #define HASH_SIZE 10007  // 选择一个质数作为哈希表大小
     
     HashEntry* hashTable = (HashEntry*)calloc(HASH_SIZE, sizeof(HashEntry));
@@ -236,6 +253,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     }
     
     free(hashTable);
+    // 理论上不会到达这里，因为题目保证有解
     return result;
 }
 ```
@@ -274,6 +292,8 @@ hashTable[currentHash].used = 1;
 - **冲突处理**：线性探测法
 - **质数大小**：选择质数10007减少冲突
 - **内存管理**：使用`calloc`初始化为0
+- **数组长度限制**：最大为10^4，使用较小的哈希表
+- **开放地址法**：处理哈希冲突的经典方法
 
 ## 🎯 选择指南
 

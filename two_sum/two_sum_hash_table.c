@@ -1,7 +1,3 @@
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-
 // 哈希表条目结构体
 typedef struct {
     int value;    // 存储数组元素的值
@@ -9,6 +5,9 @@ typedef struct {
     int used;     // 标记该位置是否被使用
 } HashEntry;
 
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     // 分配返回数组的内存
     int* result = (int*)malloc(2 * sizeof(int));
@@ -17,6 +16,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     // 使用简单的哈希表实现
     // 由于数组长度最大为10^4，我们可以使用一个较小的哈希表
     // 使用开放地址法处理冲突
+    // 10007 是大于 10000 的最小质数
     #define HASH_SIZE 10007  // 选择一个质数作为哈希表大小
     
     HashEntry* hashTable = (HashEntry*)calloc(HASH_SIZE, sizeof(HashEntry));
