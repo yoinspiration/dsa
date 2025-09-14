@@ -5,7 +5,7 @@
  */
 
 // 使用质数作为哈希表大小
-#define HASH_SIZE 50021  // 50021 是质数，接近50000
+#define HASH_SIZE 60013  // 60013 是质数，大于60000，适合m+n≤60000的情况
 
 struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
     // 创建哈希表，存储链表A中所有节点的地址
